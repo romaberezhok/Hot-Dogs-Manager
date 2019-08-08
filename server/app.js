@@ -1,17 +1,18 @@
 const express = require('express');
 const bodyParser = require('body-parser');
+const cors = require('cors');
 const mongoose = require('mongoose');
 const hotDogsRoute = require('./routes/hotDogs');
 
 const app = express();
 
 app.use(bodyParser.json());
+app.use(cors());
 app.use('/api', hotDogsRoute);
 
 app.get('/', (req, res) => {
     res.send('Use /api to connect to api');
 })
-
 
 mongoose.connect('mongodb://localhost:27017/hotdogs', {
     useNewUrlParser: true
