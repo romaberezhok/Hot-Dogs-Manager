@@ -2,6 +2,8 @@
   <div class="container">
     <Alert v-if="alert" :message="alert"/>
     <h1 class="page-header mb-4">Manage Hot Dogs </h1>
+    <input class="form-control" placeholder="Enter title" v-model="filterInput">
+    <br>
     <table class="table table-striped">
       <thead>
         <tr>
@@ -12,7 +14,7 @@
         </tr>
       </thead>
       <tbody>
-        <tr v-for="hotDog in hotDogs" :key="hotDog.id">
+        <tr v-for="hotDog in filterBy(hotDogs, filterInput)" :key="hotDog.id">
           <td>{{hotDog.title}}</td>
           <td>{{hotDog.description}}</td>
           <td>{{hotDog.ingredients}}</td>
@@ -35,7 +37,8 @@ export default {
   data() {
     return {
       hotDogs: [],
-      alert: ''
+      alert: '',
+      filterInput: ''
     }
   },
   created() {
@@ -52,6 +55,9 @@ export default {
       } catch(err) {
         console.log(err);
       }
+    },
+    filterBy(list, value) {
+      return list.filter((hotDog) => hotDog.title.toLowerCase().indexOf(value.toLowerCase()) > -1)
     }
   }
 
